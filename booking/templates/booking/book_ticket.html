@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Tickets - {{ concert.title }}</title>
+    <style>
+        /* Global Background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Matches the global theme */
+            color: #2d3748;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* The Booking Card (Animation Removed!) */
+        .booking-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        /* Typography */
+        h2 {
+            margin-top: 0;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .concert-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .concert-date {
+            text-align: center;
+            color: #a0aec0;
+            margin-bottom: 20px;
+        }
+
+        /* Concert Info Summary Box */
+        .info-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .price { font-weight: bold; font-size: 1.1em; color: #48bb78; }
+        .tickets-red { color: #ff4757; font-weight: bold; }
+
+        /* Form Elements */
+        form p, label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        /* Targets both standard inputs and Django form inputs */
+        input[type="number"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 25px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* The Fun Button */
+        button[type="submit"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(1px);
+        }
+
+        /* Back Link */
+        .back-link {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #a0aec0;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .back-link a:hover {
+            color: #ff4757;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="booking-card">
+        <h2>Secure Your Spot</h2>
+        
+        <div class="concert-title">{{ concert.title }}</div>
+        <div class="concert-date">{{ concert.date }}</div>
+
+        <div class="info-box">
+            <span class="price">Price: ${{ concert.price }}</span>
+            <span class="tickets-red">Left: {{ concert.available_tickets }}</span>
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="tickets_booked">How many tickets?</label>
+            <input type="number" id="tickets_booked" name="tickets_booked" min="1" max="{{ concert.available_tickets }}" value="1" required>
+            
+            <button type="submit">Confirm Booking</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'concert_list' %}">← Cancel & Return to Concerts</a>
+        </div>
+    </div>
+
+</body>
+</html>

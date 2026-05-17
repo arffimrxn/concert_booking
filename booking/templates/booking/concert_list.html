@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upcoming Concerts</title>
+</head>
+<body>
+    <div class="nav-bar">
+        {% if user.is_authenticated %}
+            <span>Hello, <strong>{{ user.username }}</strong>!</span>
+            <a href="{% url 'profile' %}">My Profile</a>
+            <form method="POST" action="{% url 'logout' %}" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Log In</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
+
+    <h1>Concert Booking System</h1>
+    <h2>Available Concerts</h2>
+
+    <ul>
+        {% for concert in concerts %}
+            <li>
+                <strong>{{ concert.title }}</strong>
+                <div class="date">{{ concert.date }}</div>
+                
+                {% if concert.poster %}
+                    <img src="{{ concert.poster.url }}" alt="{{ concert.title }} Poster" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                {% endif %}
+                
+                <em>{{ concert.description }}</em>
+                <div class="stats">
+                    Price: RM{{ concert.price }} | Tickets left:
+                    <span class="tickets-red"> {{ concert.available_tickets }}</span>
+                </div>
+                
+                <a href="{% url 'book_ticket' concert.id %}" style="width: 100%; text-decoration: none;">
+                    <button class="book-btn">Book Now</button>
+                </a>
+            </li>
+        {% empty %}
+            <li>No concerts available at the moment.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f4f8; /* Soft light blue/gray background */
+        color: #2d3748;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+        background: white;
+        padding: 15px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .nav-bar a, .nav-bar button {
+        text-decoration: none;
+        color: #4a5568;
+        font-weight: 600;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .nav-bar a:hover, .nav-bar button:hover {
+        color: #667eea; /* Fun purple hover */
+    }
+
+    /* Typography */
+    h1 {
+        text-align: center;
+        font-size: 2.5em;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 5px;
+    }
+    h2 {
+        text-align: center;
+        color: #718096;
+        margin-bottom: 40px;
+    }
+
+    /* The Concert Grid */
+    ul {
+        list-style-type: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    /* Individual Concert Cards */
+    li {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    }
+
+    /* Concert Details */
+    strong {
+        font-size: 1.4em;
+        color: #2d3748;
+        margin-bottom: 5px;
+    }
+    .date {
+        color: #a0aec0;
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+    em {
+        color: #4a5568;
+        font-style: normal;
+        line-height: 1.5;
+        margin: 15px 0;
+        flex-grow: 1; /* Pushes the button to the bottom */
+    }
+    .stats {
+        font-weight: bold;
+        color: #48bb78; /* Success green */
+        margin-bottom: 15px;
+        padding: 8px 15px;
+        background: #f0fff4;
+        border-radius: 20px;
+    }
+    
+    .tickets-red {
+        color: #ff4757; /* The exact same bright red/pink from your original button! */
+        font-weight: bold;
+    }
+
+  /* The Fun Button (Now in Purple!) */
+    .book-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Same purple as login! */
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        text-decoration: none;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .book-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4); /* Updated shadow to match purple */
+    }
+    
+    .book-btn:active {
+        transform: scale(0.95);
+    }
+</style>

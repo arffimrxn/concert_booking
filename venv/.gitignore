@@ -1,0 +1,10 @@
+# Security & Environment Variables
+.env
+venv/
+__pycache__/
+
+# Database
+db.sqlite3
+
+# Uploaded Media (We don't push test images to GitHub)
+media/

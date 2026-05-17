@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Concert Booking</title>
+    <style>
+        /* Global Background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Matches the global theme */
+            color: #2d3748;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .top-nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.2s;
+        }
+
+        .top-nav a:hover {
+            color: #764ba2;
+        }
+
+        .logout-btn {
+            background: #ff4757; /* Red button for logging out */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .logout-btn:hover { transform: scale(1.05); }
+
+        /* The Dashboard Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        /* Typography */
+        h1 {
+            margin-top: 0;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #4a5568;
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+        }
+
+        /* User Info Section */
+        .user-info p {
+            font-size: 1.1em;
+            color: #4a5568;
+            margin: 10px 0;
+        }
+        .user-info strong { color: #2d3748; }
+
+        /* Ticket List */
+        .ticket-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 15px;
+        }
+
+        .ticket-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .ticket-item:hover {
+            transform: translateX(5px); /* Slides slightly to the right on hover */
+            border-color: #667eea;
+        }
+
+        .ticket-details strong {
+            display: block;
+            font-size: 1.2em;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .ticket-details span {
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        .ticket-badge {
+            background: #e6fffa; /* Soft green */
+            color: #319795;      /* Dark green text */
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #a0aec0;
+            font-size: 1.1em;
+        }
+
+        .empty-state a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <div class="top-nav">
+            <a href="{% url 'concert_list' %}">← Back to Concerts</a>
+            <form method="POST" action="{% url 'logout' %}" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Log Out</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h1>Welcome, {{ user.username }}!</h1>
+            <div class="user-info">
+                <p><strong>Email:</strong> {{ user.email|default:"No email provided" }}</p>
+                <p><strong>Account created:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>My Booked Tickets</h2>
+            
+            {% if bookings %}
+                <ul class="ticket-list">
+                    {% for booking in bookings %}
+                        <li class="ticket-item">
+                            <div class="ticket-details">
+                                <strong>{{ booking.concert.title }}</strong>
+                                <span>{{ booking.concert.date }}</span>
+                            </div>
+                            <div class="ticket-badge">
+                                {{ booking.tickets_booked }} Ticket{{ booking.tickets_booked|pluralize }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-state">
+                    <p>You haven't booked any concerts yet!</p>
+                    <a href="{% url 'concert_list' %}">Browse available shows here.</a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>
