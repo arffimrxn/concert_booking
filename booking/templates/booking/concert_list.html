@@ -2,8 +2,246 @@
 <html>
 <head>
     <title>Upcoming Concerts</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Soft light blue/gray background */
+            color: #2d3748;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative; 
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-bar a, .nav-bar button {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .nav-bar a:hover, .nav-bar button:hover {
+            color: #667eea; /* Fun purple hover */
+        }
+
+        /* Typography */
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            background: linear-gradient(90deg, #B589D6 0%, #9969C7 25%, #804FB3 50%, #6641A8 75%, #4B2E9B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 2.0em;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+
+        /* The Concert Grid */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Individual Concert Cards */
+        li {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Concert Details */
+        strong {
+            font-size: 1.4em;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .date {
+            color: #a0aec0;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        em {
+            color: #4a5568;
+            font-style: normal;
+            line-height: 1.5;
+            margin: 15px 0;
+            flex-grow: 1; /* Pushes the button to the bottom */
+        }
+        .stats {
+            font-weight: bold;
+            color: #718096; 
+            margin-bottom: 15px;
+            padding: 8px 15px;
+            background: #e1e4e9;
+            border-radius: 20px;
+        }
+        
+        .tickets-red {
+            color: #ff4757; 
+            font-weight: bold;
+        }
+
+        /* The Fun Button */
+        .book-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .book-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4); 
+        }
+        
+        .book-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* =======================================================
+           UPDATED: CENTERED SYMMETRIC SOUNDWAVE BACKDROP CSS
+           ======================================================= */
+        /* =======================================================
+           UPDATED: MASSIVE SOUNDWAVE BACKDROP CSS
+           ======================================================= */
+        
+        .soundwave-center-bg {
+            position: fixed;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 100vw;  /* Stretches the container across the entire screen */
+            height: 100vh; /* Gives the bars the whole screen to bounce in */
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            gap: 1.5vw; /* Responsive gap: spreads out wider on bigger screens! */
+            
+            z-index: 1; 
+            opacity: 0.25; /* Perfect watermark balance */
+            pointer-events: none; 
+        }
+
+        .soundwave-center-bg span {
+            display: block;
+            width: 1.2vw; /* Responsive thickness: fatter on big screens */
+            max-width: 25px; /* Keeps them from getting too chunky on ultra-wide monitors */
+            background: linear-gradient(to top, #667eea, #764ba2); 
+            border-radius: 20px; 
+            
+            /* CRITICAL FIX: Multiplies your base heights by 3 to make them HUGE */
+            height: calc(var(--h) * 1.5); 
+            
+            transform-origin: center; 
+            animation: pulseCenter 1.5s infinite ease-in-out alternate;
+            animation-delay: var(--d);
+        }
+
+        /* Keep your keyframes exactly as they are! */
+        @keyframes pulseCenter {
+            0% {
+                transform: scaleY(0.1); 
+            }
+            100% {
+                transform: scaleY(1.0); 
+            }
+        }
+        
+          /* FIX 2: Pull all readable content to the very front */
+        .nav-bar, h1, h2, h3, ul {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
+
+    <div class="soundwave-center-bg">
+        <span style="--h: 12px; --d: 0.1s;"></span>
+        <span style="--h: 24px; --d: 0.4s;"></span>
+        <span style="--h: 18px; --d: 0.2s;"></span>
+        <span style="--h: 45px; --d: 0.6s;"></span>
+        <span style="--h: 30px; --d: 0.3s;"></span>
+        <span style="--h: 65px; --d: 0.7s;"></span>
+        <span style="--h: 50px; --d: 0.2s;"></span>
+        <span style="--h: 95px; --d: 0.5s;"></span>
+        <span style="--h: 70px; --d: 0.1s;"></span>
+        <span style="--h: 140px; --d: 0.4s;"></span>
+        <span style="--h: 110px; --d: 0.3s;"></span>
+        <span style="--h: 220px; --d: 0.6s;"></span>
+        <span style="--h: 180px; --d: 0.2s;"></span>
+        
+        <span style="--h: 310px; --d: 0.7s;"></span> 
+        <span style="--h: 160px; --d: 0.1s;"></span>
+        <span style="--h: 270px; --d: 0.5s;"></span>
+        
+        <span style="--h: 190px; --d: 0.3s;"></span>
+        <span style="--h: 240px; --d: 0.2s;"></span>
+        <span style="--h: 120px; --d: 0.6s;"></span>
+        <span style="--h: 150px; --d: 0.4s;"></span>
+        <span style="--h: 80px; --d: 0.1s;"></span>
+        <span style="--h: 105px; --d: 0.5s;"></span>
+        <span style="--h: 55px; --d: 0.2s;"></span>
+        <span style="--h: 75px; --d: 0.7s;"></span>
+        <span style="--h: 35px; --d: 0.3s;"></span>
+        <span style="--h: 48px; --d: 0.6s;"></span>
+        <span style="--h: 15px; --d: 0.2s;"></span>
+        <span style="--h: 22px; --d: 0.4s;"></span>
+        <span style="--h: 10px; --d: 0.1s;"></span>
+    </div>
+
     <div class="nav-bar">
         {% if user.is_authenticated %}
             <span>Hello, <strong>{{ user.username }}</strong>!</span>
@@ -18,8 +256,9 @@
         {% endif %}
     </div>
 
-    <h1>Concert Booking System</h1>
-    <h2>Available Concerts</h2>
+    <h1>Lights. Music. Live.</h1>
+    <h2>Don’t Miss These Shows</h2>
+    <h3>Events Open for Booking</h3>
 
     <ul>
         {% for concert in concerts %}
@@ -47,140 +286,3 @@
     </ul>
 </body>
 </html>
-<style>
-    /* Global Styles */
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f4f8; /* Soft light blue/gray background */
-        color: #2d3748;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    /* Navigation Bar */
-    .nav-bar {
-        background: white;
-        padding: 15px 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-    
-    .nav-bar a, .nav-bar button {
-        text-decoration: none;
-        color: #4a5568;
-        font-weight: 600;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    .nav-bar a:hover, .nav-bar button:hover {
-        color: #667eea; /* Fun purple hover */
-    }
-
-    /* Typography */
-    h1 {
-        text-align: center;
-        font-size: 2.5em;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 5px;
-    }
-    h2 {
-        text-align: center;
-        color: #718096;
-        margin-bottom: 40px;
-    }
-
-    /* The Concert Grid */
-    ul {
-        list-style-type: none;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-    }
-
-    /* Individual Concert Cards */
-    li {
-        background: white;
-        border-radius: 16px;
-        padding: 25px;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    li:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 25px rgba(0,0,0,0.1);
-    }
-
-    /* Concert Details */
-    strong {
-        font-size: 1.4em;
-        color: #2d3748;
-        margin-bottom: 5px;
-    }
-    .date {
-        color: #a0aec0;
-        font-size: 0.9em;
-        margin-bottom: 15px;
-    }
-    em {
-        color: #4a5568;
-        font-style: normal;
-        line-height: 1.5;
-        margin: 15px 0;
-        flex-grow: 1; /* Pushes the button to the bottom */
-    }
-    .stats {
-        font-weight: bold;
-        color: #48bb78; /* Success green */
-        margin-bottom: 15px;
-        padding: 8px 15px;
-        background: #f0fff4;
-        border-radius: 20px;
-    }
-    
-    .tickets-red {
-        color: #ff4757; /* The exact same bright red/pink from your original button! */
-        font-weight: bold;
-    }
-
-  /* The Fun Button (Now in Purple!) */
-    .book-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Same purple as login! */
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 25px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
-        text-decoration: none;
-        display: inline-block;
-        width: 100%;
-    }
-
-    .book-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4); /* Updated shadow to match purple */
-    }
-    
-    .book-btn:active {
-        transform: scale(0.95);
-    }
-</style>

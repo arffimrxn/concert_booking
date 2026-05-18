@@ -36,7 +36,7 @@ class AuditLog(models.Model):
 class Profile(models.Model):
     # This links the profile to the user exactly one-to-one
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    age = models.IntegerField()
+    date_of_birth = models.DateField()
     phone_number = models.CharField(max_length=15)
 
     def __str__(self):

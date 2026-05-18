@@ -36,24 +36,42 @@ def register(request):
 # This security decorator ensures ONLY logged-in users can trigger this function
 @login_required
 def book_ticket(request, concert_id):
-    # Securely fetch the exact concert, or show a safe 404 error if it doesn't exist
+    # Find the specific concert
     concert = get_object_or_404(Concert, id=concert_id)
     
     if request.method == 'POST':
-        # Create a new booking linking the logged-in user to this concert
-        Booking.objects.create(
-            user=request.user,
-            concert=concert,
-            tickets_booked=1
-        )
-        # Deduct the ticket from the available inventory
-        concert.available_tickets -= 1
-        concert.save()
+        # 1. Grab the exact number the user typed into the form
+        # We use 'tickets_booked' because that is the name="" attribute in our HTML form
+        # We default to 1 just in case, and wrap it in int() to ensure it's a number
+        tickets_requested = int(request.POST.get('tickets_booked', 1))
         
-        # Send them back to the homepage for now
-        return redirect('concert_list')
-        
+        # 2. Security Check: Make sure they aren't trying to book more than exist!
+        if tickets_requested > 0 and tickets_requested <= concert.available_tickets:
+            
+            # 3. Subtract the exact requested amount
+            concert.available_tickets -= tickets_requested
+            concert.save()
+            
+            # 4. Save the booking record with the correct ticket amount
+            Booking.objects.create(
+                user=request.user,
+                concert=concert,
+                tickets_booked=tickets_requested
+            )
+            
+            # Send them to their dashboard to see the new tickets
+            return redirect('profile')
+            
+        else:
+            # If they try to hack the form to buy 5000 tickets, it just reloads the page safely
+            return render(request, 'booking/book_ticket.html', {
+                'concert': concert,
+                'error': 'Not enough tickets available.' 
+            })
+
+    # If it's a GET request (just viewing the page), show the form
     return render(request, 'booking/book_ticket.html', {'concert': concert})
+
 @login_required
 def profile(request):
     # Securely fetch ONLY the bookings associated with the currently logged-in user
