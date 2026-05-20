@@ -27,7 +27,7 @@ Then, open a web browser and navigate to `http://127.0.0.1:8000`.
 
 ## 5. Dependencies
 - Python 3.14.5
-- Django 6.0.5 (or your specific version)
+- Django 6.0.5 
 - SQLite3 (Default local database)
 
 ## 6. System Screenshots
