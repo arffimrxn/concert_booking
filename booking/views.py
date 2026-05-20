@@ -41,11 +41,11 @@ def book_ticket(request, concert_id):
     
     if request.method == 'POST':
         # 1. Grab the exact number the user typed into the form
-        # We use 'tickets_booked' because that is the name="" attribute in our HTML form
-        # We default to 1 just in case, and wrap it in int() to ensure it's a number
+        # Use 'tickets_booked' because that is the name="" attribute in the HTML form
+        # Use default to 1 just in case, and wrap it in int() to ensure it's a number
         tickets_requested = int(request.POST.get('tickets_booked', 1))
         
-        # 2. Security Check: Make sure they aren't trying to book more than exist!
+        # 2. Security Check: Make sure user aren't trying to book more than available tikkets.
         if tickets_requested > 0 and tickets_requested <= concert.available_tickets:
             
             # 3. Subtract the exact requested amount
