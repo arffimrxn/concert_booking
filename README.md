@@ -30,3 +30,5 @@ Then, open a web browser and navigate to `http://127.0.0.1:8000`.
 - Django 6.0.5 (or your specific version)
 - SQLite3 (Default local database)
 
+## 6. System Screenshots
+<img width="1246" height="1123" alt="image" src="https://github.com/user-attachments/assets/0ac25401-8518-4da2-a20a-d29609bc92c7" />
