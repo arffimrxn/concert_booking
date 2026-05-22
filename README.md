@@ -32,3 +32,5 @@ Then, open a web browser and navigate to `http://127.0.0.1:8000`.
 
 ## 6. System Screenshots
 <img width="1246" height="1123" alt="image" src="https://github.com/user-attachments/assets/0ac25401-8518-4da2-a20a-d29609bc92c7" />
+<img width="1229" height="1122" alt="image" src="https://github.com/user-attachments/assets/75a53655-4393-4ffc-9dd6-99e849424e01" />
+<img width="1192" height="714" alt="image" src="https://github.com/user-attachments/assets/ed41debb-57f5-48cb-868e-f0c15c559a57" />
