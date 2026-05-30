@@ -12,6 +12,7 @@ A secure, web-based concert booking application built with Django. This platform
    - Mac/Linux: `source venv/bin/activate`
 5. Create a local `.env` file based on `.env.example` and add your secret key.
 6. Apply database migrations: `python manage.py migrate`
+7. For testing please change DEBUG=True in the .env file
 
 ## 3. Security Features Summary
 - **Environment Isolation:** Sensitive credentials stored in `.env` and excluded via `.gitignore`.
