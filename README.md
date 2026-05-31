@@ -35,6 +35,23 @@ To set up this project locally, follow these steps:
 9. **Access the application:** 
    Open your browser and navigate to `http://127.0.0.1:8000`. You can log into the admin dashboard at `http://127.0.0.1:8000/admin` to begin adding concert data.
 
+### 🎟️ Managing Concert Data (Admin Panel)
+
+Since the database is newly initialized, the homepage will show "No concerts available" until you add them. To populate your database:
+
+1. Ensure your development server is running (`python manage.py runserver`).
+2. Navigate to the admin dashboard at `http://127.0.0.1:8000/admin`.
+3. Log in using the superuser credentials.
+4. Under the **Concerts** section, click **+ Add**.
+5. Fill in the event details:
+   * **Concert Title**
+   * **Date and Time**
+   * **Price (RM)**
+   * **Total Tickets Available**
+   * **Poster Image** (Upload a custom image)
+6. Click **Save**. 
+
+Navigate back to the main homepage (`http://127.0.0.1:8000`) and the newly added concerts will now be displayed
 
 ## 3. Security Features Summary
 - **Environment Isolation:** Sensitive credentials stored in `.env` and excluded via `.gitignore`.
