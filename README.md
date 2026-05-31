@@ -4,15 +4,37 @@
 A secure, web-based concert booking application built with Django. This platform allows users to view upcoming events, register for accounts, and book tickets while enforcing strict security protocols and Role-Based Access Control (RBAC).
 
 ## 2. Installation Steps
-1. Clone the repository: `git clone https://github.com/arffimrxn/concert_booking.git`
-2. Navigate into the directory: `cd concert_booking`
-3. Create a virtual environment: `python -m venv venv`
-4. Activate the virtual environment:
-   - Windows: `venv\Scripts\activate`
-   - Mac/Linux: `source venv/bin/activate`
-5. Create a local `.env` file based on `.env.example` and add your secret key.
-6. Apply database migrations: `python manage.py migrate`
-7. For testing please change DEBUG=True in the .env file
+
+To set up this project locally, follow these steps:
+
+1. **Clone the repository:** 
+   `git clone https://github.com/arffimrxn/concert_booking.git`
+2. **Navigate into the directory:** 
+   `cd concert_booking`
+3. **Create a virtual environment:** 
+   `python -m venv venv`
+4. **Activate the virtual environment:**
+   * Windows: `venv\Scripts\activate`
+   * Mac/Linux: `source venv/bin/activate`
+5. **Install dependencies:**
+   `pip install -r requirements.txt`
+
+### 🔒 Database Initialization
+*Note: For security and data privacy, the `db.sqlite3` database is excluded from version control. You must initialize your own local database.*
+
+6. **Apply database migrations (builds the database tables):**
+   `python manage.py migrate`
+7. **Create a local admin account:**
+   `python manage.py createsuperuser`
+   *(Follow the prompts to set your admin username, email, and password)*
+
+### 🚀 Running the Application
+
+8. **Start the development server:**
+   `python manage.py runserver`
+9. **Access the application:** 
+   Open your browser and navigate to `http://127.0.0.1:8000`. You can log into the admin dashboard at `http://127.0.0.1:8000/admin` to begin adding concert data.
+
 
 ## 3. Security Features Summary
 - **Environment Isolation:** Sensitive credentials stored in `.env` and excluded via `.gitignore`.
