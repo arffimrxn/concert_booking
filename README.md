@@ -32,17 +32,17 @@ To set up this project locally, follow these steps:
 ### 🔒 Database Initialization
 *Note: For security and data privacy, the `db.sqlite3` database is excluded from version control. You must initialize your own local database.*
 
-6. **Apply database migrations (builds the database tables):**
+8. **Apply database migrations (builds the database tables):**
    `python manage.py migrate`
-7. **Create a local admin account:**
+9. **Create a local admin account:**
    `python manage.py createsuperuser`
    *(Follow the prompts to set your admin username, email, and password)*
 
 ### 🚀 Running the Application
 
-8. **Start the development server:**
+10. **Start the development server:**
    `python manage.py runserver`
-9. **Access the application:** 
+11. **Access the application:** 
    Open your browser and navigate to `http://127.0.0.1:8000`. You can log into the admin dashboard at `http://127.0.0.1:8000/admin` to begin adding concert data.
 
 ### 🎟️ Managing Concert Data (Admin Panel)
