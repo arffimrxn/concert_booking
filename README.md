@@ -19,7 +19,7 @@ To set up this project locally, follow these steps:
 5. **Install dependencies:**
    `pip install -r requirements.txt`
 
-### ⚙️ Environment Configuration (Crucial Step)
+### ⚙️ Environment Configuration (IMPORTANT!)
 
 *Because this project follows strict security best practices, the `.env` file containing sensitive credentials is intentionally excluded from version control. You must create a local version to run the application:*
 
