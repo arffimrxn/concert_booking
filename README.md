@@ -19,6 +19,16 @@ To set up this project locally, follow these steps:
 5. **Install dependencies:**
    `pip install -r requirements.txt`
 
+### ⚙️ Environment Configuration (Crucial Step)
+
+*Because this project follows strict security best practices, the `.env` file containing sensitive credentials is intentionally excluded from version control. You must create a local version to run the application:*
+
+6. **Create a new file named exactly `.env` in the root directory.**
+7. **Open the file and add your own Secret Key and Debug setting:**
+   ```env
+   SECRET_KEY='your-random-secret-key-goes-here'
+   DEBUG=True
+
 ### 🔒 Database Initialization
 *Note: For security and data privacy, the `db.sqlite3` database is excluded from version control. You must initialize your own local database.*
 
@@ -52,6 +62,16 @@ Since the database is newly initialized, the homepage will show "No concerts ava
 6. Click **Save**. 
 
 Navigate back to the main homepage (`http://127.0.0.1:8000`) and the newly added concerts will now be displayed
+
+### 🛠️ Development & Troubleshooting (DEBUG Mode)
+
+By default, this application is configured with strict security settings for production. If you clone this repository and find that CSS styles, images, or detailed error pages are missing, it is because the app is running in secure mode.
+
+To enable local development mode:
+1. Open your `.env` file.
+2. Locate the line: `DEBUG=False`
+3. Change it to: `DEBUG=True`
+4. Restart your local server (`Ctrl + C`, then `python manage.py runserver`).
 
 ## 3. Security Features Summary
 - **Environment Isolation:** Sensitive credentials stored in `.env` and excluded via `.gitignore`.
