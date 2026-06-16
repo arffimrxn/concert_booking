@@ -19,7 +19,7 @@ To set up this project locally, follow these steps:
 5. **Install dependencies:**
    `pip install -r requirements.txt`
 
-### ⚙️ Environment Configuration (IMPORTANT!)
+###  Environment Configuration (IMPORTANT!)
 
 *Because this project follows strict security best practices, the `.env` file containing sensitive credentials is intentionally excluded from version control. You must create a local version to run the application:*
 
@@ -29,7 +29,7 @@ To set up this project locally, follow these steps:
    SECRET_KEY='your-random-secret-key-goes-here'
    DEBUG=True
 
-### 🔒 Database Initialization
+###  Database Initialization
 *Note: For security and data privacy, the `db.sqlite3` database is excluded from version control. You must initialize your own local database.*
 
 8. **Apply database migrations (builds the database tables):**
@@ -38,14 +38,14 @@ To set up this project locally, follow these steps:
    `python manage.py createsuperuser`
    *(Follow the prompts to set your admin username, email, and password)*
 
-### 🚀 Running the Application
+###  Running the Application
 
 10. **Start the development server:**
    `python manage.py runserver`
 11. **Access the application:** 
    Open your browser and navigate to `http://127.0.0.1:8000`. You can log into the admin dashboard at `http://127.0.0.1:8000/admin` to begin adding concert data.
 
-### 🎟️ Managing Concert Data (Admin Panel)
+###  Managing Concert Data (Admin Panel)
 
 Since the database is newly initialized, the homepage will show "No concerts available" until you add them. To populate your database:
 
@@ -63,7 +63,7 @@ Since the database is newly initialized, the homepage will show "No concerts ava
 
 Navigate back to the main homepage (`http://127.0.0.1:8000`) and the newly added concerts will now be displayed
 
-### 🛠️ Development & Troubleshooting (DEBUG Mode)
+###  Development & Troubleshooting (DEBUG Mode)
 
 By default, this application is configured with strict security settings for production. If you clone this repository and find that CSS styles, images, or detailed error pages are missing, it is because the app is running in secure mode.
 
